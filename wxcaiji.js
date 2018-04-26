@@ -98,7 +98,7 @@ module.exports = {
                 console.log(e);
             }
         }
-        else if(/s\?__biz/i.test(requestDetail.url) || /mp\/rumor/i.test(requestDetail.url))
+        else if(/s\?__biz/i.test(requestDetail.url) || /mp\/rumor/i.test(requestDetail.url) || /appmsg\/show\?__biz/i.test(requestDetail.url))
         { //公众号文章接口（rumor这个地址是公众号文章被辟谣了）
 
             try {
