@@ -60,7 +60,7 @@ module.exports = {
                 ret = reg.exec(responseStr);
                 var appid = ret[1];
 
-                HttpPost({msg_list:msgList, user_name:username, head_img:headimg, nick_name:nickname, appid:appid, url:requestDetail.url},"/api/wxCaiji/saveMsgList");//将匹配到的历史消息json发送到服务器
+                HttpPost({msg_list:msgList, user_name:username, head_img:headimg, nick_name:nickname, appid:appid, url:requestDetail.url},"/api/wxcaiji/saveMsgList");//将匹配到的历史消息json发送到服务器
 
             }
             catch(e)
@@ -76,7 +76,7 @@ module.exports = {
                 var json = JSON.parse(responseDetail.response.body.toString());
                 if (json.general_msg_list != [])
                 {
-                    HttpPost({msg_list:json.general_msg_list, is_json:1, url:requestDetail.url},"/api/wxCaiji/saveMsgList");//将历史消息的json发送到服务器
+                    HttpPost({msg_list:json.general_msg_list, is_json:1, url:requestDetail.url},"/api/wxcaiji/saveMsgList");//将历史消息的json发送到服务器
                 }
             }
             catch(e)
@@ -98,7 +98,7 @@ module.exports = {
                 ret = reg.exec(requestStr);
                 var idx = ret[2];
 
-                HttpPost({mid:mid, idx:idx, msg_ext:responseDetail.response.body.toString()},"/api/wxCaiji/saveMsgExt");//将文章阅读量点赞量的json发送到服务器
+                HttpPost({mid:mid, idx:idx, msg_ext:responseDetail.response.body.toString()},"/api/wxcaiji/saveMsgExt");//将文章阅读量点赞量的json发送到服务器
             }
             catch(e)
             {
@@ -114,6 +114,8 @@ module.exports = {
                 var $ = cheerio.load(responseStr);
                 var content = $('#js_content').html();
                 var originalUrl = $('#js_share_source').attr('href');
+                var hasVideo = $('iframe.video_iframe').length > 0 ? 1 : 0;
+                var hasAudio = ($('qqmusic.qqmusic_iframe').length > 0 || $('mpvoice.audio_iframe').length > 0) ? 1 : 0;
 
                 var reg = /var _copyright_stat = \"(.*?)\";/;
                 var ret = reg.exec(responseStr);
@@ -124,7 +126,7 @@ module.exports = {
 
                 return new Promise((resolve, reject) => {
                     var newResponse = responseDetail.response;
-                    HttpPost({content:content, url:requestDetail.url, copyright_stat:copyrightStat, original_url:originalUrl},"/api/wxCaiji/saveMsgContent", function (body) {
+                    HttpPost({content:content, url:requestDetail.url, copyright_stat:copyrightStat, original_url:originalUrl, has_video:hasVideo, has_audio:hasAudio},"/api/wxcaiji/saveMsgContent", function (body) {
                         if (body)
                         {
                             var reg = /<script nonce="(.*)"/;
