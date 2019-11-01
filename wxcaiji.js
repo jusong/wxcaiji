@@ -4,7 +4,7 @@ function HttpPost(data,path,callback) {//发送data到path
     content = require('querystring').stringify(data);
     var options = {
         method: "POST",
-        host: "wxunion.fenghuowenchuang.com",//注意没有http://，这是服务器的域名。
+        host: "www.example.com",//注意没有http://，这是服务器的域名。
         port: 80,
         path: path,//接收程序的路径和文件名
         headers: {
